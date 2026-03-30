@@ -45,9 +45,9 @@
             min-height: 100vh;
             border-right: 1px solid var(--sidebar-border);
             box-shadow: 12px 0 24px -20px rgba(15, 23, 42, 0.28);
-            width: 23%;
-            flex: 0 0 23%;
-            max-width: 23%;
+            width: 22%;
+            flex: 0 0 22%;
+            max-width: 22%;
         }
 
         .main-panel {
