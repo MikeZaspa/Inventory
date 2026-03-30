@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,11 @@ Route::post('/login', function (Request $request) {
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'auth.dashboard')->name('dashboard');
+    Route::get('/chord', [ChordController::class, 'page'])->name('chord');
+    Route::get('/chords', [ChordController::class, 'index'])->name('chords.index');
+    Route::post('/chords', [ChordController::class, 'store'])->name('chords.store');
+    Route::put('/chords/{chord}', [ChordController::class, 'update'])->name('chords.update');
+    Route::delete('/chords/{chord}', [ChordController::class, 'destroy'])->name('chords.destroy');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
