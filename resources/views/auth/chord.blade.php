@@ -86,6 +86,32 @@
             padding: 2rem;
         }
 
+        .top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(217, 226, 236, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(8px);
+        }
+
+        .top-navbar-title {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .top-navbar-meta {
+            margin: 0;
+            color: var(--text-soft);
+            font-size: 0.92rem;
+        }
+
         .panel-card {
             background: var(--surface);
             border: 1px solid rgba(217, 226, 236, 0.9);
@@ -211,56 +237,34 @@
             </aside>
 
             <main class="col-12 col-lg-9 col-xl-10 page-content">
+                <div class="top-navbar">
+                    <div>
+                        <p class="top-navbar-title">Combat Inventory</p>
+                        <p class="top-navbar-meta">Chord records management</p>
+                    </div>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-dark btn-pill">
+                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                        </button>
+                    </form>
+                </div>
+
                 <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-4">
                     <div>
                         <p class="text-uppercase fw-semibold text-primary mb-2 small">Chord Management</p>
                         <h1 class="font-display fw-bold mb-2">Size and chord CRUD</h1>
                         <p class="text-secondary mb-0">Manage entries like <strong>Large - 1/2</strong> and <strong>Medium - 1/4</strong> with JavaScript and Laravel.</p>
                     </div>
+                    <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#chordModal">
+                        <i class="bi bi-plus-circle me-2"></i>Add chord entry
+                    </button>
                 </div>
 
                 <div id="statusBanner" class="status-banner mb-4" role="status" aria-live="polite"></div>
 
                 <div class="row g-4">
-                    <div class="col-12 col-xl-4">
-                        <section class="panel-card p-4 h-100">
-                            <div class="hero-note rounded-4 p-4 mb-4">
-                                <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="rounded-circle bg-white shadow-sm d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
-                                        <i class="bi bi-journal-text fs-4 text-primary"></i>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">Quick reference</div>
-                                        <div class="text-secondary small">Based on your handwritten sample</div>
-                                    </div>
-                                </div>
-                                <div class="small text-secondary">Examples: <strong>Large</strong> with chord <strong>1/2</strong>, and <strong>Medium</strong> with chord <strong>1/4</strong>.</div>
-                            </div>
-
-                            <h2 class="h4 font-display mb-3" id="formTitle">Add chord entry</h2>
-                            <form id="chordForm" class="d-grid gap-3">
-                                <input type="hidden" id="recordId">
-                                <div>
-                                    <label for="size" class="form-label">Size</label>
-                                    <input type="text" class="form-control" id="size" name="size" placeholder="e.g. Large" required>
-                                </div>
-                                <div>
-                                    <label for="chord" class="form-label">Chord</label>
-                                    <input type="text" class="form-control" id="chord" name="chord" placeholder="e.g. 1/2" required>
-                                </div>
-                                <div class="d-flex flex-wrap gap-2 pt-2">
-                                    <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
-                                        <i class="bi bi-plus-circle me-2"></i>Save entry
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-pill d-none" id="cancelEditButton">
-                                        Cancel edit
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-                    </div>
-
-                    <div class="col-12 col-xl-8">
+                    <div class="col-12">
                         <section class="panel-card p-4">
                             <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
                                 <div>
@@ -292,6 +296,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="chordModal" tabindex="-1" aria-labelledby="chordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0" style="border-radius: 28px;">
+                <div class="modal-header border-0 px-4 pt-4 pb-2">
+                    <div>
+                        <h2 class="h4 font-display mb-1" id="formTitle">Add chord entry</h2>
+                        <p class="text-secondary mb-0 small">Create or update a chord record here.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 pb-4 pt-2">
+                    <form id="chordForm" class="d-grid gap-3">
+                        <input type="hidden" id="recordId">
+                        <div>
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" class="form-control" id="size" name="size" placeholder="e.g. Large" required>
+                        </div>
+                        <div>
+                            <label for="chord" class="form-label">Chord</label>
+                            <input type="text" class="form-control" id="chord" name="chord" placeholder="e.g. 1/2" required>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 pt-2">
+                            <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
+                                <i class="bi bi-plus-circle me-2"></i>Save entry
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-pill d-none" id="cancelEditButton">
+                                Cancel edit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         const routes = {
@@ -312,9 +352,12 @@
         const chordInput = document.getElementById('chord');
         const submitButton = document.getElementById('submitButton');
         const cancelEditButton = document.getElementById('cancelEditButton');
+        const openCreateModalButton = document.getElementById('openCreateModalButton');
         const refreshButton = document.getElementById('refreshButton');
         const chordTableBody = document.getElementById('chordTableBody');
         const statusBanner = document.getElementById('statusBanner');
+        const chordModalElement = document.getElementById('chordModal');
+        const chordModal = new bootstrap.Modal(chordModalElement);
 
         function escapeHtml(value) {
             return String(value)
@@ -361,6 +404,7 @@
             cancelEditButton.classList.remove('d-none');
             submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update entry';
             clearStatus();
+            chordModal.show();
             sizeInput.focus();
         }
 
@@ -464,6 +508,7 @@
 
                 await loadChords();
                 resetForm();
+                chordModal.hide();
                 showStatus(result.message || 'Saved successfully.');
             } catch (error) {
                 showStatus(error.message, 'error');
@@ -475,6 +520,16 @@
         cancelEditButton.addEventListener('click', () => {
             resetForm();
             clearStatus();
+            chordModal.hide();
+        });
+
+        openCreateModalButton.addEventListener('click', () => {
+            resetForm();
+            clearStatus();
+        });
+
+        chordModalElement.addEventListener('hidden.bs.modal', () => {
+            resetForm();
         });
 
         refreshButton.addEventListener('click', async () => {
