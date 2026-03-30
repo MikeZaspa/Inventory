@@ -1,0 +1,90 @@
+<?php
+
+return [
+    'sidebar_items' => [
+        [
+            'slug' => 'dashboard',
+            'label' => 'Dashboard',
+            'description' => 'Overview and activity',
+            'category' => 'Control center',
+            'summary' => 'View your main inventory overview and admin activity in one place.',
+        ],
+        [
+            'slug' => 'chord',
+            'label' => 'Chord',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Track available stock, movement, and updates for chord materials.',
+        ],
+        [
+            'slug' => 'garter-black-edge',
+            'label' => 'Garter Black Edge',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Manage garter black edge inventory levels and usage records.',
+        ],
+        [
+            'slug' => 'peactwill',
+            'label' => 'Peactwill',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Monitor peactwill stock and prepare this section for item details.',
+        ],
+        [
+            'slug' => 'thead-apple-brand',
+            'label' => 'Thead Apple Brand',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Keep thread apple brand records organized and easy to review.',
+        ],
+        [
+            'slug' => 'manila-bay-brand',
+            'label' => 'Manila Bay Brand',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Open the Manila Bay Brand section for stock tracking and future updates.',
+        ],
+        [
+            'slug' => 'subli-ink',
+            'label' => 'Subli Ink',
+            'description' => 'Printing supply',
+            'category' => 'Printing supplies',
+            'summary' => 'Review subli ink supply status and manage replenishment needs.',
+        ],
+        [
+            'slug' => 'subli-mate-nova-sublimation-paper',
+            'label' => 'Subli mATE Nova Sublimation Paper',
+            'description' => 'Printing supply',
+            'category' => 'Printing supplies',
+            'summary' => 'Track subli mATE Nova sublimation paper inventory and page updates.',
+        ],
+        [
+            'slug' => 'inventory-used',
+            'label' => 'Inventory Used',
+            'description' => 'Usage records',
+            'category' => 'Tracking groups',
+            'summary' => 'Use this page to record released items and monitor consumed inventory.',
+        ],
+        [
+            'slug' => 'rebbings',
+            'label' => 'Rebbings',
+            'description' => 'Accessory stock',
+            'category' => 'Tracking groups',
+            'summary' => 'Manage rebbings stock status and prepare this page for detailed entries.',
+        ],
+        [
+            'slug' => 'yunix',
+            'label' => 'Yunix',
+            'description' => 'Material category',
+            'category' => 'Materials',
+            'summary' => 'Open the Yunix section for stock visibility and inventory maintenance.',
+        ],
+        [
+            'slug' => 'fabric-colors-available',
+            'label' => 'Fabric Colors Available',
+            'description' => 'Color references',
+            'category' => 'Tracking groups',
+            'summary' => 'Review available fabric colors and keep color options organized.',
+        ],
+    ],
+];
