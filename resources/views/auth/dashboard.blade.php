@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Combat Inventory</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,7 +79,7 @@
             padding: 1rem 1.25rem;
             background: rgba(255, 255, 255, 0.92);
             border: 1px solid rgba(217, 226, 236, 0.9);
-            border-radius: 24px;
+            border-radius: 10px;
             box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
 
@@ -212,7 +212,7 @@
                     <i class="bi bi-bounding-box sidebar-icon" aria-hidden="true"></i>
                     <div class="fw-semibold">Chord</div>
                 </a>
-                <a href="#" class="sidebar-link">
+                <a href="{{ route('garter') }}" class="sidebar-link">
                     <i class="bi bi-diagram-3 sidebar-icon" aria-hidden="true"></i>
                     <div class="fw-semibold">Garter</div>
                 </a>
@@ -234,7 +234,7 @@
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline-dark rounded-pill px-4 py-3 fw-semibold">
+                    <button type="submit" class="btn btn-outline-dark btn-pill">
                         <i class="bi bi-box-arrow-right me-2"></i>Logout
                     </button>
                 </form>
@@ -272,5 +272,4 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChordController;
+use App\Http\Controllers\GarterController;
 use App\Models\Chord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/chords', [ChordController::class, 'store'])->name('chords.store');
     Route::put('/chords/{chord}', [ChordController::class, 'update'])->name('chords.update');
     Route::delete('/chords/{chord}', [ChordController::class, 'destroy'])->name('chords.destroy');
+    Route::get('/garter', [GarterController::class, 'page'])->name('garter');
+    Route::get('/garters', [GarterController::class, 'index'])->name('garters.index');
+    Route::post('/garters', [GarterController::class, 'store'])->name('garters.store');
+    Route::put('/garters/{garter}', [GarterController::class, 'update'])->name('garters.update');
+    Route::delete('/garters/{garter}', [GarterController::class, 'destroy'])->name('garters.destroy');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();

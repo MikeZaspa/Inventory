@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Chord | Combat Inventory</title>
+    <title>Garter | Combat Inventory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -234,11 +234,11 @@
                         <i class="bi bi-speedometer2 sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Dashboard</div>
                     </a>
-                    <a href="{{ route('chord') }}" class="sidebar-link active" aria-current="page">
+                    <a href="{{ route('chord') }}" class="sidebar-link">
                         <i class="bi bi-bounding-box sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Chord</div>
                     </a>
-                    <a href="{{ route('garter') }}" class="sidebar-link">
+                    <a href="{{ route('garter') }}" class="sidebar-link active" aria-current="page">
                         <i class="bi bi-diagram-3 sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Garter</div>
                     </a>
@@ -257,7 +257,7 @@
                 <div class="top-navbar">
                     <div>
                         <p class="top-navbar-title">Combat Inventory</p>
-                        <p class="top-navbar-meta">Chord records management</p>
+                        <p class="top-navbar-meta">Garter records management</p>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -272,11 +272,11 @@
                 <section class="panel-card p-4">
                     <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
                         <div>
-                            <h1 class="h4 font-display mb-1">Chord records</h1>
+                            <h1 class="h4 font-display mb-1">Garter records</h1>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#chordModal">
-                                <i class="bi bi-plus-circle me-2"></i>Add chord entry
+                            <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#garterModal">
+                                <i class="bi bi-plus-circle me-2"></i>Add garter entry
                             </button>
                             <button type="button" class="btn btn-outline-primary btn-pill" id="refreshButton">
                                 <i class="bi bi-arrow-clockwise me-2"></i>Refresh
@@ -285,17 +285,17 @@
                     </div>
 
                     <div class="table-wrap">
-                        <table id="chordTable" class="table align-middle mb-0">
+                        <table id="garterTable" class="table align-middle mb-0">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Size</th>
-                                    <th>Chord</th>
+                                    <th>Garter</th>
+                                    <th>Black Edge</th>
                                     <th>Created</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="chordTableBody"></tbody>
+                            <tbody id="garterTableBody"></tbody>
                         </table>
                     </div>
                 </section>
@@ -303,32 +303,26 @@
         </div>
     </div>
 
-    <div class="modal fade" id="chordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="garterModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0" style="border-radius: 28px;">
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
                     <div>
-                        <h2 class="h4 font-display mb-1" id="formTitle">Add chord entry</h2>
-                        <p class="text-secondary mb-0 small">Create or update a chord record here.</p>
+                        <h2 class="h4 font-display mb-1" id="formTitle">Add garter entry</h2>
+                        <p class="text-secondary mb-0 small">Create or update a garter record here.</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body px-4 pb-4 pt-2">
-                    <form id="chordForm" class="d-grid gap-3">
+                    <form id="garterForm" class="d-grid gap-3">
                         <input type="hidden" id="recordId">
                         <div>
-                            <label for="size" class="form-label">Size</label>
-                            <select class="form-control" id="size" name="size" required>
-                                <option value="">Select size</option>
-                                <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Large">Large</option>
-                                <option value="XL">XL</option>
-                            </select>
+                            <label for="garter" class="form-label">Garter</label>
+                            <input type="text" class="form-control" id="garter" name="garter" placeholder="e.g. 2 inches" required>
                         </div>
                         <div>
-                            <label for="chord" class="form-label">Chord</label>
-                            <input type="text" class="form-control" id="chord" name="chord" placeholder="e.g. 1/2" required>
+                            <label for="blackEdge" class="form-label">Black Edge</label>
+                            <input type="text" class="form-control" id="blackEdge" name="black_edge" placeholder="e.g. 1/2 inches" required>
                         </div>
                         <div class="d-flex flex-wrap justify-content-center gap-2 pt-2">
                             <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
@@ -349,29 +343,29 @@
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         const routes = {
-            index: @json(route('chords.index')),
-            store: @json(route('chords.store')),
-            updateBase: @json(url('/chords')),
+            index: @json(route('garters.index')),
+            store: @json(route('garters.store')),
+            updateBase: @json(url('/garters')),
         };
 
         const state = {
-            items: @json($chords),
+            items: @json($garters),
             editingId: null,
         };
 
-        const form = document.getElementById('chordForm');
+        const form = document.getElementById('garterForm');
         const formTitle = document.getElementById('formTitle');
         const recordIdInput = document.getElementById('recordId');
-        const sizeInput = document.getElementById('size');
-        const chordInput = document.getElementById('chord');
+        const garterInput = document.getElementById('garter');
+        const blackEdgeInput = document.getElementById('blackEdge');
         const submitButton = document.getElementById('submitButton');
         const cancelEditButton = document.getElementById('cancelEditButton');
         const openCreateModalButton = document.getElementById('openCreateModalButton');
         const refreshButton = document.getElementById('refreshButton');
-        const chordTableBody = document.getElementById('chordTableBody');
+        const garterTableBody = document.getElementById('garterTableBody');
         const statusBanner = document.getElementById('statusBanner');
-        const chordModalElement = document.getElementById('chordModal');
-        const chordModal = new bootstrap.Modal(chordModalElement);
+        const garterModalElement = document.getElementById('garterModal');
+        const garterModal = new bootstrap.Modal(garterModalElement);
 
         function escapeHtml(value) {
             return String(value)
@@ -405,7 +399,7 @@
 
         function showCreateSuccessAlert() {
             Swal.fire({
-                title: 'Chord entry created successfully.',
+                title: 'Garter entry created successfully.',
                 icon: 'success',
                 iconColor: '#16a34a',
                 confirmButtonColor: '#0f274f',
@@ -416,7 +410,7 @@
 
         function showRefreshAlert() {
             Swal.fire({
-                title: 'Chord list refreshed.',
+                title: 'Garter list refreshed.',
                 icon: 'success',
                 iconColor: '#2563eb',
                 confirmButtonColor: '#0f274f',
@@ -427,7 +421,8 @@
 
         async function confirmDelete(item) {
             const result = await Swal.fire({
-                title: 'Delete chord entry?',
+                title: 'Delete garter entry?',
+                text: `Delete the ${item.garter} garter entry?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
@@ -451,7 +446,7 @@
             state.editingId = null;
             recordIdInput.value = '';
             form.reset();
-            formTitle.textContent = 'Add chord entry';
+            formTitle.textContent = 'Add garter entry';
             cancelEditButton.classList.add('d-none');
             submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Save entry';
         }
@@ -459,14 +454,14 @@
         function enterEditMode(item) {
             state.editingId = item.id;
             recordIdInput.value = item.id;
-            sizeInput.value = item.size;
-            chordInput.value = item.chord;
-            formTitle.textContent = `Edit ${item.size}`;
+            garterInput.value = item.garter;
+            blackEdgeInput.value = item.black_edge;
+            formTitle.textContent = `Edit ${item.garter}`;
             cancelEditButton.classList.remove('d-none');
             submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update entry';
             clearStatus();
-            chordModal.show();
-            sizeInput.focus();
+            garterModal.show();
+            garterInput.focus();
         }
 
         function formatDate(value) {
@@ -485,22 +480,22 @@
 
         function renderTable() {
             if (!state.items.length) {
-                chordTableBody.innerHTML = `
+                garterTableBody.innerHTML = `
                     <tr>
                         <td colspan="5" class="empty-state">
                             <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-                            No chord records yet. Add your first size and chord value.
+                            No garter records yet. Add your first garter and black edge value.
                         </td>
                     </tr>
                 `;
                 return;
             }
 
-            chordTableBody.innerHTML = state.items.map((item, index) => `
+            garterTableBody.innerHTML = state.items.map((item, index) => `
                 <tr>
                     <td class="fw-semibold text-secondary">${index + 1}</td>
-                    <td class="fw-semibold">${escapeHtml(item.size)}</td>
-                    <td><span class="value-chip">${escapeHtml(item.chord)}</span></td>
+                    <td class="fw-semibold">${escapeHtml(item.garter)}</td>
+                    <td><span class="value-chip">${escapeHtml(item.black_edge)}</span></td>
                     <td class="text-secondary small">${formatDate(item.created_at)}</td>
                     <td class="text-end">
                         <div class="d-inline-flex gap-2">
@@ -538,7 +533,7 @@
             return payload;
         }
 
-        async function loadChords(showMessage = false) {
+        async function loadGarters(showMessage = false) {
             const items = await request(routes.index, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
             state.items = items;
             renderTable();
@@ -554,8 +549,8 @@
             setLoading(true);
 
             const payload = {
-                size: sizeInput.value.trim(),
-                chord: chordInput.value.trim(),
+                garter: garterInput.value.trim(),
+                black_edge: blackEdgeInput.value.trim(),
             };
 
             try {
@@ -568,9 +563,9 @@
                     body: JSON.stringify(payload),
                 });
 
-                await loadChords();
+                await loadGarters();
                 resetForm();
-                chordModal.hide();
+                garterModal.hide();
                 if (!isEditing) {
                     showCreateSuccessAlert();
                 } else {
@@ -586,7 +581,7 @@
         cancelEditButton.addEventListener('click', () => {
             resetForm();
             clearStatus();
-            chordModal.hide();
+            garterModal.hide();
         });
 
         openCreateModalButton.addEventListener('click', () => {
@@ -594,7 +589,7 @@
             clearStatus();
         });
 
-        chordModalElement.addEventListener('hidden.bs.modal', () => {
+        garterModalElement.addEventListener('hidden.bs.modal', () => {
             resetForm();
         });
 
@@ -602,13 +597,13 @@
             clearStatus();
 
             try {
-                await loadChords(true);
+                await loadGarters(true);
             } catch (error) {
                 showStatus(error.message, 'error');
             }
         });
 
-        chordTableBody.addEventListener('click', async (event) => {
+        garterTableBody.addEventListener('click', async (event) => {
             const button = event.target.closest('button[data-action]');
 
             if (!button) {
@@ -646,7 +641,7 @@
                         resetForm();
                     }
 
-                    await loadChords();
+                    await loadGarters();
                     showSweetAlert(result.message || 'Deleted successfully.', 'success');
                 } catch (error) {
                     showStatus(error.message, 'error');
