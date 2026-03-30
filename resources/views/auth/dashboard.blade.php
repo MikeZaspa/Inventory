@@ -37,6 +37,9 @@
             min-height: 100vh;
             border-right: 1px solid var(--sidebar-border);
             box-shadow: 12px 0 24px -20px rgba(15, 23, 42, 0.28);
+            width: 23%;
+            flex: 0 0 23%;
+            max-width: 23%;
         }
 
         .brand-logo {
@@ -129,7 +132,7 @@
 </head>
 <body>
     <div class="container dashboard-shell">
-         <aside class="col-12 col-lg-4 col-xl-3 px-4 py-4 sidebar-panel">
+         <aside class="px-4 py-4 sidebar-panel">
             <img src="{{ asset('images/combat-transparent.png') }}" alt="Combat logo" class="brand-logo">
 
             <nav class="mt-4 d-grid gap-3">

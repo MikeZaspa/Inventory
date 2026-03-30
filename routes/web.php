@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChordController;
+use App\Models\Chord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,13 @@ Route::post('/login', function (Request $request) {
 })->name('login.store');
 
 Route::middleware('auth')->group(function () {
-    Route::view('/dashboard', 'auth.dashboard')->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('auth.dashboard', [
+            'totalChords' => Chord::count(),
+            'totalSizes' => Chord::query()->distinct('size')->count('size'),
+            'latestChord' => Chord::query()->latest()->value('chord') ?? '-',
+        ]);
+    })->name('dashboard');
     Route::get('/chord', [ChordController::class, 'page'])->name('chord');
     Route::get('/chords', [ChordController::class, 'index'])->name('chords.index');
     Route::post('/chords', [ChordController::class, 'store'])->name('chords.store');

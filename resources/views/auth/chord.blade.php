@@ -12,14 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --page-blue: #dbeafe;
             --sidebar-hover: #0f274f;
             --sidebar-border: #d9e2ec;
             --text-main: #0f172a;
             --text-soft: #64748b;
             --surface: #ffffff;
-            --surface-soft: #f8fafc;
-            --accent: #1d4ed8;
-            --danger: #dc2626;
             --success-bg: #dcfce7;
             --success-text: #166534;
             --danger-bg: #fee2e2;
@@ -37,14 +35,25 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        .page-shell {
+        .dashboard-shell {
             min-height: 100vh;
+            padding: 0;
+            margin-left: 0;
         }
 
         .sidebar-panel {
             min-height: 100vh;
             border-right: 1px solid var(--sidebar-border);
             box-shadow: 12px 0 24px -20px rgba(15, 23, 42, 0.28);
+            width: 23%;
+            flex: 0 0 23%;
+            max-width: 23%;
+        }
+
+        .main-panel {
+            width: 77%;
+            flex: 0 0 77%;
+            max-width: 77%;
         }
 
         .brand-logo {
@@ -66,11 +75,16 @@
             text-decoration: none;
             border-radius: 20px;
             padding: 1rem 1.1rem;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
 
         .sidebar-link:hover,
-        .sidebar-link:focus,
+        .sidebar-link:focus {
+            background: var(--sidebar-hover);
+            border-color: var(--sidebar-hover);
+            color: #fff;
+        }
+
         .sidebar-link.active {
             background: var(--sidebar-hover);
             color: #fff;
@@ -97,7 +111,6 @@
             border: 1px solid rgba(217, 226, 236, 0.9);
             border-radius: 24px;
             box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-            backdrop-filter: blur(8px);
         }
 
         .top-navbar-title {
@@ -117,11 +130,6 @@
             border: 1px solid rgba(217, 226, 236, 0.9);
             border-radius: 28px;
             box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
-        }
-
-        .hero-note {
-            border: 1px dashed rgba(29, 78, 216, 0.24);
-            background: linear-gradient(135deg, rgba(219, 234, 254, 0.5), rgba(255, 255, 255, 0.92));
         }
 
         .form-control,
@@ -198,6 +206,15 @@
         @media (max-width: 991.98px) {
             .sidebar-panel {
                 min-height: auto;
+                width: 100%;
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+
+            .main-panel {
+                width: 100%;
+                flex-basis: 100%;
+                max-width: 100%;
             }
 
             .page-content {
@@ -207,9 +224,9 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid page-shell">
+    <div class="container-fluid dashboard-shell">
         <div class="row g-0">
-            <aside class="col-12 col-lg-3 col-xl-2 px-4 py-4 sidebar-panel">
+            <aside class="px-4 py-4 sidebar-panel">
                 <img src="{{ asset('images/combat-transparent.png') }}" alt="Combat logo" class="brand-logo">
 
                 <nav class="mt-4 d-grid gap-3">
@@ -236,7 +253,7 @@
                 </nav>
             </aside>
 
-            <main class="col-12 col-lg-9 col-xl-10 page-content">
+            <main class="page-content main-panel">
                 <div class="top-navbar">
                     <div>
                         <p class="top-navbar-title">Combat Inventory</p>
@@ -250,53 +267,43 @@
                     </form>
                 </div>
 
-                <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-4">
-                    <div>
-                        <p class="text-uppercase fw-semibold text-primary mb-2 small">Chord Management</p>
-                        <h1 class="font-display fw-bold mb-2">Size and chord CRUD</h1>
-                        <p class="text-secondary mb-0">Manage entries like <strong>Large - 1/2</strong> and <strong>Medium - 1/4</strong> with JavaScript and Laravel.</p>
-                    </div>
-                    <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#chordModal">
-                        <i class="bi bi-plus-circle me-2"></i>Add chord entry
-                    </button>
-                </div>
-
                 <div id="statusBanner" class="status-banner mb-4" role="status" aria-live="polite"></div>
 
-                <div class="row g-4">
-                    <div class="col-12">
-                        <section class="panel-card p-4">
-                            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
-                                <div>
-                                    <h2 class="h4 font-display mb-1">Chord records</h2>
-                                    <p class="text-secondary mb-0">Create, update, and delete your size measurements here.</p>
-                                </div>
-                                <button type="button" class="btn btn-outline-primary btn-pill" id="refreshButton">
-                                    <i class="bi bi-arrow-clockwise me-2"></i>Refresh
-                                </button>
-                            </div>
-
-                            <div class="table-wrap">
-                                <table class="table align-middle mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Size</th>
-                                            <th>Chord</th>
-                                            <th>Created</th>
-                                            <th class="text-end">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="chordTableBody"></tbody>
-                                </table>
-                            </div>
-                        </section>
+                <section class="panel-card p-4">
+                    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
+                        <div>
+                            <h1 class="h4 font-display mb-1">Chord records</h1>
+                            <p class="text-secondary mb-0">Create, update, and delete size and chord values with JavaScript and Laravel.</p>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#chordModal">
+                                <i class="bi bi-plus-circle me-2"></i>Add chord entry
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-pill" id="refreshButton">
+                                <i class="bi bi-arrow-clockwise me-2"></i>Refresh
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="table-wrap">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Size</th>
+                                    <th>Chord</th>
+                                    <th>Created</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="chordTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
 
-    <div class="modal fade" id="chordModal" tabindex="-1" aria-labelledby="chordModalLabel" aria-hidden="true">
+    <div class="modal fade" id="chordModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0" style="border-radius: 28px;">
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
@@ -311,7 +318,13 @@
                         <input type="hidden" id="recordId">
                         <div>
                             <label for="size" class="form-label">Size</label>
-                            <input type="text" class="form-control" id="size" name="size" placeholder="e.g. Large" required>
+                            <select class="form-control" id="size" name="size" required>
+                                <option value="">Select size</option>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                                <option value="XL">XL</option>
+                            </select>
                         </div>
                         <div>
                             <label for="chord" class="form-label">Chord</label>
