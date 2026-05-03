@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ChordController;
 use App\Http\Controllers\GarterController;
+use App\Http\Controllers\ManilaBayBrandController;
+use App\Http\Controllers\ThreadAppleBrandController;
 use App\Http\Controllers\PeactwillController;
 use App\Models\Chord;
 use Illuminate\Http\Request;
@@ -58,7 +60,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/garters', [GarterController::class, 'store'])->name('garters.store');
     Route::put('/garters/{garter}', [GarterController::class, 'update'])->name('garters.update');
     Route::delete('/garters/{garter}', [GarterController::class, 'destroy'])->name('garters.destroy');
-    Route::view('/thread-apple-brand', 'auth.thread-apple-brand')->name('thread-apple-brand');
+    Route::get('/thread-apple-brand', [ThreadAppleBrandController::class, 'page'])->name('thread-apple-brand');
+    Route::get('/thread-apple-brands', [ThreadAppleBrandController::class, 'index'])->name('thread-apple-brands.index');
+    Route::post('/thread-apple-brands', [ThreadAppleBrandController::class, 'store'])->name('thread-apple-brands.store');
+    Route::put('/thread-apple-brands/{threadAppleBrand}', [ThreadAppleBrandController::class, 'update'])->name('thread-apple-brands.update');
+    Route::delete('/thread-apple-brands/{threadAppleBrand}', [ThreadAppleBrandController::class, 'destroy'])->name('thread-apple-brands.destroy');
+    Route::get('/manila-bay-brand', [ManilaBayBrandController::class, 'page'])->name('manila-bay-brand');
+    Route::get('/manila-bay-brands', [ManilaBayBrandController::class, 'index'])->name('manila-bay-brands.index');
+    Route::post('/manila-bay-brands', [ManilaBayBrandController::class, 'store'])->name('manila-bay-brands.store');
+    Route::put('/manila-bay-brands/{manilaBayBrand}', [ManilaBayBrandController::class, 'update'])->name('manila-bay-brands.update');
+    Route::delete('/manila-bay-brands/{manilaBayBrand}', [ManilaBayBrandController::class, 'destroy'])->name('manila-bay-brands.destroy');
     Route::get('/peactwill', [PeactwillController::class, 'page'])->name('peactwill');
     Route::get('/peactwills', [PeactwillController::class, 'index'])->name('peactwills.index');
     Route::post('/peactwills', [PeactwillController::class, 'store'])->name('peactwills.store');

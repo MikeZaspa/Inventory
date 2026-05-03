@@ -21,6 +21,7 @@
         body {
             font-family: 'DM Sans', sans-serif;
             color: var(--text-main);
+            overflow: hidden;
         }
 
         .font-display {
@@ -28,25 +29,61 @@
         }
 
         .dashboard-shell {
+            height: 100vh;
             min-height: 100vh;
             padding: 0;
             margin-left: 0;
+            overflow: hidden;
         }
 
         .sidebar-panel {
+            height: 100vh;
             min-height: 100vh;
+            overflow-y: scroll;
             border-right: 1px solid var(--sidebar-border);
             box-shadow: 12px 0 24px -20px rgba(15, 23, 42, 0.28);
             width: 22%;
             flex: 0 0 22%;
             max-width: 22%;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(15, 39, 79, 0.45) transparent;
+        }
+
+        .sidebar-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-panel::-webkit-scrollbar-thumb {
+            background: rgba(15, 39, 79, 0.35);
+            border-radius: 999px;
         }
 
         .main-panel {
+            height: 100vh;
+            overflow-y: scroll;
             width: 77%;
             flex: 0 0 77%;
             max-width: 77%;
             padding: 2rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(15, 39, 79, 0.25) transparent;
+        }
+
+        .main-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .main-panel::-webkit-scrollbar-thumb {
+            background: rgba(15, 39, 79, 0.22);
+            border-radius: 999px;
         }
 
         .brand-logo {
@@ -117,6 +154,45 @@
 
         .sidebar-link.active {
             background: var(--sidebar-hover);
+            color: #fff;
+        }
+
+        .sidebar-group {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .sidebar-submenu {
+            display: none;
+            gap: 0.45rem;
+            padding-left: 1.1rem;
+            border-left: 2px solid rgba(15, 39, 79, 0.12);
+            margin-left: 0.7rem;
+        }
+
+        .sidebar-group:hover .sidebar-submenu,
+        .sidebar-group:focus-within .sidebar-submenu {
+            display: grid;
+        }
+
+        .sidebar-sublink {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 16px;
+            padding: 0.85rem 1rem;
+            font-size: 0.96rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar-sublink:hover,
+        .sidebar-sublink:focus,
+        .sidebar-sublink.active {
+            background: rgba(15, 39, 79, 0.96);
             color: #fff;
         }
 
@@ -220,10 +296,23 @@
                         <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Peactwill Color</div>
                     </a>
-                    <a href="{{ route('thread-apple-brand') }}" class="sidebar-link">
-                        <i class="bi bi-tag sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Thread Apple Brand</div>
-                    </a>
+                    <div class="sidebar-group">
+                        <a href="{{ route('thread-apple-brand') }}" class="sidebar-link">
+                            <i class="bi bi-tag sidebar-icon" aria-hidden="true"></i>
+                            <div class="fw-semibold">Brand</div>
+                            <i class="bi bi-chevron-down ms-auto" aria-hidden="true"></i>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <a href="{{ route('thread-apple-brand') }}" class="sidebar-sublink">
+                                <i class="bi bi-record-circle" aria-hidden="true"></i>
+                                <span>Thread Apple</span>
+                            </a>
+                            <a href="{{ route('manila-bay-brand') }}" class="sidebar-sublink">
+                                <i class="bi bi-record-circle" aria-hidden="true"></i>
+                                <span>Manila Bay</span>
+                            </a>
+                        </div>
+                    </div>
             </nav>
         </aside>
         <main class="main-panel">

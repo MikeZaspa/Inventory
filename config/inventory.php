@@ -39,10 +39,10 @@ return [
         ],
         [
             'slug' => 'manila-bay-brand',
-            'label' => 'Manila Bay Brand',
+            'label' => 'Manila Bay - Thread 120 TKT-3000M',
             'description' => 'Material category',
             'category' => 'Materials',
-            'summary' => 'Open the Manila Bay Brand section for stock tracking and future updates.',
+            'summary' => 'Open the Manila Bay Thread 120 TKT-3000M section for stock tracking and future updates.',
         ],
         [
             'slug' => 'subli-ink',
