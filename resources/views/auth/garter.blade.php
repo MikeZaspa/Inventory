@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Garter | Combat Inventory</title>
+    <title>Inches | Combat Inventory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,13 +238,9 @@
                         <i class="bi bi-bounding-box sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Chord</div>
                     </a>
-                    <a href="{{ route('garter') }}" class="sidebar-link active" aria-current="page">
-                        <i class="bi bi-diagram-3 sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Garter</div>
-                    </a>
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('garter') }}" class="sidebar-link">
                         <i class="bi bi-square sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Black Edge</div>
+                        <div class="fw-semibold">Inches</div>
                     </a>
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
@@ -257,7 +253,7 @@
                 <div class="top-navbar">
                     <div>
                         <p class="top-navbar-title">Combat Inventory</p>
-                        <p class="top-navbar-meta">Garter records management</p>
+                        <p class="top-navbar-meta">Inches records management</p>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -272,11 +268,11 @@
                 <section class="panel-card p-4">
                     <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
                         <div>
-                            <h1 class="h4 font-display mb-1">Garter records</h1>
+                            <h1 class="h4 font-display mb-1">Inches records</h1>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
                             <button type="button" class="btn btn-primary btn-pill" id="openCreateModalButton" data-bs-toggle="modal" data-bs-target="#garterModal">
-                                <i class="bi bi-plus-circle me-2"></i>Add garter entry
+                                <i class="bi bi-plus-circle me-2"></i>Add inches entry
                             </button>
                             <button type="button" class="btn btn-outline-primary btn-pill" id="refreshButton">
                                 <i class="bi bi-arrow-clockwise me-2"></i>Refresh
@@ -289,8 +285,8 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Garter</th>
-                                    <th>Black Edge</th>
+                                    <th>Inches</th>
+                                    <th>Quantity</th>
                                     <th>Created</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
@@ -308,30 +304,30 @@
             <div class="modal-content border-0" style="border-radius: 28px;">
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
                     <div>
-                        <h2 class="h4 font-display mb-1" id="formTitle">Add garter entry</h2>
-                        <p class="text-secondary mb-0 small">Create or update a garter record here.</p>
+	                        <h2 class="h4 font-display mb-1" id="formTitle">Add inches entry</h2>
+	                        <p class="text-secondary mb-0 small">Create or update an inches record here.</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body px-4 pb-4 pt-2">
-                    <form id="garterForm" class="d-grid gap-3">
-                        <input type="hidden" id="recordId">
+	                <div class="modal-body px-4 pb-4 pt-2">
+	                    <form id="garterForm" class="d-grid gap-3">
+	                        <input type="hidden" id="recordId">
                         <div>
-                            <label for="garter" class="form-label">Garter</label>
-                            <input type="text" class="form-control" id="garter" name="garter" placeholder="e.g. 2 inches" required>
+		                            <label for="garter" class="form-label">Inches</label>
+		                            <input type="text" class="form-control" id="garter" name="inches" required>
                         </div>
                         <div>
-                            <label for="blackEdge" class="form-label">Black Edge</label>
-                            <input type="text" class="form-control" id="blackEdge" name="black_edge" placeholder="e.g. 1/2 inches" required>
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" min="1" step="1" value="1" required>
                         </div>
-                        <div class="d-flex flex-wrap justify-content-center gap-2 pt-2">
-                            <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
-                                <i class="bi bi-plus-circle me-2"></i>Save entry
-                            </button>
-                            <button type="button" class="btn btn-outline-secondary btn-pill d-none" id="cancelEditButton">
-                                Cancel edit
-                            </button>
-                        </div>
+	                    <div class="d-flex flex-wrap justify-content-center gap-2 pt-2">
+	                            <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
+	                                <i class="bi bi-plus-circle me-2"></i>Save inches
+	                            </button>
+	                            <button type="button" class="btn btn-outline-secondary btn-pill d-none" id="cancelEditButton">
+	                                Cancel edit
+	                            </button>
+	                        </div>
                     </form>
                 </div>
             </div>
@@ -357,7 +353,7 @@
         const formTitle = document.getElementById('formTitle');
         const recordIdInput = document.getElementById('recordId');
         const garterInput = document.getElementById('garter');
-        const blackEdgeInput = document.getElementById('blackEdge');
+        const quantityInput = document.getElementById('quantity');
         const submitButton = document.getElementById('submitButton');
         const cancelEditButton = document.getElementById('cancelEditButton');
         const openCreateModalButton = document.getElementById('openCreateModalButton');
@@ -399,7 +395,7 @@
 
         function showCreateSuccessAlert() {
             Swal.fire({
-                title: 'Garter entry created successfully.',
+                title: 'Inches entry created successfully.',
                 icon: 'success',
                 iconColor: '#16a34a',
                 confirmButtonColor: '#0f274f',
@@ -410,7 +406,7 @@
 
         function showRefreshAlert() {
             Swal.fire({
-                title: 'Garter list refreshed.',
+                title: 'Inches list refreshed.',
                 icon: 'success',
                 iconColor: '#2563eb',
                 confirmButtonColor: '#0f274f',
@@ -421,8 +417,8 @@
 
         async function confirmDelete(item) {
             const result = await Swal.fire({
-                title: 'Delete garter entry?',
-                text: `Delete the ${item.garter} garter entry?`,
+                title: 'Delete inches entry?',
+                text: `Delete the ${item.inches} inches entry?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
@@ -438,27 +434,28 @@
             submitButton.disabled = isLoading;
             refreshButton.disabled = isLoading;
             submitButton.innerHTML = isLoading
-                ? '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Saving...'
-                : `<i class="bi ${state.editingId ? 'bi-check2-circle' : 'bi-plus-circle'} me-2"></i>${state.editingId ? 'Update entry' : 'Save entry'}`;
+                ? '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Saving inches...'
+                : `<i class="bi ${state.editingId ? 'bi-check2-circle' : 'bi-plus-circle'} me-2"></i>${state.editingId ? 'Update inches' : 'Save inches'}`;
         }
 
         function resetForm() {
             state.editingId = null;
             recordIdInput.value = '';
             form.reset();
-            formTitle.textContent = 'Add garter entry';
+            quantityInput.value = '1';
+            formTitle.textContent = 'Add inches entry';
             cancelEditButton.classList.add('d-none');
-            submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Save entry';
+            submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Save inches';
         }
 
         function enterEditMode(item) {
             state.editingId = item.id;
             recordIdInput.value = item.id;
-            garterInput.value = item.garter;
-            blackEdgeInput.value = item.black_edge;
-            formTitle.textContent = `Edit ${item.garter}`;
+            garterInput.value = item.inches;
+            quantityInput.value = item.quantity ?? 1;
+            formTitle.textContent = `Edit ${item.inches}`;
             cancelEditButton.classList.remove('d-none');
-            submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update entry';
+            submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update inches';
             clearStatus();
             garterModal.show();
             garterInput.focus();
@@ -479,25 +476,25 @@
         }
 
         function renderTable() {
-            if (!state.items.length) {
-                garterTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="empty-state">
-                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-                            No garter records yet. Add your first garter and black edge value.
-                        </td>
-                    </tr>
-                `;
+	            if (!state.items.length) {
+	                garterTableBody.innerHTML = `
+	                    <tr>
+	                        <td colspan="5" class="empty-state">
+	                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+	                            No inches records yet. Add your first inches and quantity values.
+	                        </td>
+	                    </tr>
+	                `;
                 return;
             }
 
-            garterTableBody.innerHTML = state.items.map((item, index) => `
-                <tr>
-                    <td class="fw-semibold text-secondary">${index + 1}</td>
-                    <td class="fw-semibold">${escapeHtml(item.garter)}</td>
-                    <td><span class="value-chip">${escapeHtml(item.black_edge)}</span></td>
-                    <td class="text-secondary small">${formatDate(item.created_at)}</td>
-                    <td class="text-end">
+	            garterTableBody.innerHTML = state.items.map((item, index) => `
+	                <tr>
+	                    <td class="fw-semibold text-secondary">${index + 1}</td>
+	                    <td class="fw-semibold">${escapeHtml(item.inches)}</td>
+	                    <td class="fw-semibold">${escapeHtml(item.quantity)}</td>
+	                    <td class="text-secondary small">${formatDate(item.created_at)}</td>
+	                    <td class="text-end">
                         <div class="d-inline-flex gap-2">
                             <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" data-action="edit" data-id="${item.id}">
                                 <i class="bi bi-pencil-square me-1"></i>Edit
@@ -549,34 +546,34 @@
             setLoading(true);
 
             const payload = {
-                garter: garterInput.value.trim(),
-                black_edge: blackEdgeInput.value.trim(),
+                inches: garterInput.value.trim(),
+                quantity: quantityInput.value.trim(),
             };
 
-            try {
-                const isEditing = Boolean(state.editingId);
-                const endpoint = isEditing ? `${routes.updateBase}/${state.editingId}` : routes.store;
-                const method = isEditing ? 'PUT' : 'POST';
+	            try {
+	                const isEditing = Boolean(state.editingId);
+	                const endpoint = isEditing ? `${routes.updateBase}/${state.editingId}` : routes.store;
+	                const method = isEditing ? 'PUT' : 'POST';
 
-                const result = await request(endpoint, {
-                    method,
-                    body: JSON.stringify(payload),
-                });
+	                const result = await request(endpoint, {
+	                    method,
+	                    body: JSON.stringify(payload),
+	                });
 
-                await loadGarters();
-                resetForm();
-                garterModal.hide();
-                if (!isEditing) {
-                    showCreateSuccessAlert();
-                } else {
-                    showSweetAlert(result.message || 'Saved successfully.', 'success');
-                }
-            } catch (error) {
-                showStatus(error.message, 'error');
-            } finally {
-                setLoading(false);
-            }
-        });
+	                await loadGarters();
+	                resetForm();
+	                garterModal.hide();
+	                if (!isEditing) {
+	                    showCreateSuccessAlert();
+	                } else {
+	                    showSweetAlert(result.message || 'Saved successfully.', 'success');
+	                }
+	            } catch (error) {
+	                showStatus(error.message, 'error');
+	            } finally {
+	                setLoading(false);
+	            }
+	        });
 
         cancelEditButton.addEventListener('click', () => {
             resetForm();
@@ -653,3 +650,4 @@
     </script>
 </body>
 </html>
+

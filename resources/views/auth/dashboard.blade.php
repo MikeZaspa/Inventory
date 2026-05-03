@@ -212,13 +212,9 @@
                     <i class="bi bi-bounding-box sidebar-icon" aria-hidden="true"></i>
                     <div class="fw-semibold">Chord</div>
                 </a>
-                <a href="{{ route('garter') }}" class="sidebar-link">
-                    <i class="bi bi-diagram-3 sidebar-icon" aria-hidden="true"></i>
-                    <div class="fw-semibold">Garter</div>
-                </a>
                 <a href="#" class="sidebar-link">
                     <i class="bi bi-square sidebar-icon" aria-hidden="true"></i>
-                    <div class="fw-semibold">Black Edge</div>
+                    <div class="fw-semibold">Garter Black Edge</div>
                 </a>
                 <a href="#" class="sidebar-link">
                     <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>

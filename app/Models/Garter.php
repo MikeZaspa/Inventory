@@ -9,5 +9,6 @@ class Garter extends Model
     protected $fillable = [
         'garter',
         'black_edge',
+        'quantity',
     ];
 }

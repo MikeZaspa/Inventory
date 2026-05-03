@@ -239,12 +239,8 @@
                         <div class="fw-semibold">Chord</div>
                     </a>
                     <a href="{{ route('garter') }}" class="sidebar-link">
-                        <i class="bi bi-diagram-3 sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Garter</div>
-                    </a>
-                    <a href="#" class="sidebar-link">
                         <i class="bi bi-square sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Black Edge</div>
+                        <div class="fw-semibold">Garter Black Edge</div>
                     </a>
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
@@ -291,6 +287,7 @@
                                     <th>No.</th>
                                     <th>Size</th>
                                     <th>Chord</th>
+                                    <th>Quantity</th>
                                     <th>Created</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
@@ -330,6 +327,10 @@
                             <label for="chord" class="form-label">Chord</label>
                             <input type="text" class="form-control" id="chord" name="chord" placeholder="e.g. 1/2" required>
                         </div>
+                        <div>
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" min="1" step="1" value="1" required>
+                        </div>
                         <div class="d-flex flex-wrap justify-content-center gap-2 pt-2">
                             <button type="submit" class="btn btn-primary btn-pill" id="submitButton">
                                 <i class="bi bi-plus-circle me-2"></i>Save entry
@@ -359,120 +360,151 @@
             editingId: null,
         };
 
-        const form = document.getElementById('chordForm');
-        const formTitle = document.getElementById('formTitle');
-        const recordIdInput = document.getElementById('recordId');
-        const sizeInput = document.getElementById('size');
-        const chordInput = document.getElementById('chord');
-        const submitButton = document.getElementById('submitButton');
-        const cancelEditButton = document.getElementById('cancelEditButton');
-        const openCreateModalButton = document.getElementById('openCreateModalButton');
-        const refreshButton = document.getElementById('refreshButton');
-        const chordTableBody = document.getElementById('chordTableBody');
-        const statusBanner = document.getElementById('statusBanner');
-        const chordModalElement = document.getElementById('chordModal');
-        const chordModal = new bootstrap.Modal(chordModalElement);
+	        const form = document.getElementById('chordForm');
+	        const formTitle = document.getElementById('formTitle');
+	        const recordIdInput = document.getElementById('recordId');
+	        const sizeInput = document.getElementById('size');
+	        const chordInput = document.getElementById('chord');
+	        const quantityInput = document.getElementById('quantity');
+	        const submitButton = document.getElementById('submitButton');
+	        const cancelEditButton = document.getElementById('cancelEditButton');
+	        const openCreateModalButton = document.getElementById('openCreateModalButton');
+	        const refreshButton = document.getElementById('refreshButton');
+	        const chordTableBody = document.getElementById('chordTableBody');
+	        const statusBanner = document.getElementById('statusBanner');
+	        const chordModalElement = document.getElementById('chordModal');
+	        const chordModal = new bootstrap.Modal(chordModalElement);
 
-        function escapeHtml(value) {
-            return String(value)
-                .replaceAll('&', '&amp;')
-                .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;')
-                .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#039;');
-        }
+	        function escapeHtml(value) {
+	            return String(value)
+	                .replaceAll('&', '&amp;')
+	                .replaceAll('<', '&lt;')
+	                .replaceAll('>', '&gt;')
+	                .replaceAll('"', '&quot;')
+	                .replaceAll("'", '&#039;');
+	        }
 
-        function showStatus(message, type = 'success') {
-            statusBanner.textContent = message;
-            statusBanner.className = `status-banner show ${type}`;
-        }
+	        function showStatus(message, type = 'success') {
+	            statusBanner.textContent = message;
+	            statusBanner.className = `status-banner show ${type}`;
+	        }
 
-        function clearStatus() {
-            statusBanner.className = 'status-banner';
-            statusBanner.textContent = '';
-        }
+	        function clearStatus() {
+	            statusBanner.className = 'status-banner';
+	            statusBanner.textContent = '';
+	        }
 
-        function showSweetAlert(title, icon = 'success') {
-            Swal.fire({
-                title,
-                icon,
-                iconColor: icon === 'success' ? '#16a34a' : '#2563eb',
-                confirmButtonColor: '#0f274f',
-                timer: 1800,
-                showConfirmButton: false,
-            });
-        }
+	        function showSweetAlert(title, icon = 'success') {
+	            Swal.fire({
+	                title,
+	                icon,
+	                iconColor: icon === 'success' ? '#16a34a' : '#2563eb',
+	                confirmButtonColor: '#0f274f',
+	                timer: 1800,
+	                showConfirmButton: false,
+	            });
+	        }
 
-        function showCreateSuccessAlert() {
-            Swal.fire({
-                title: 'Chord entry created successfully.',
-                icon: 'success',
-                iconColor: '#16a34a',
-                confirmButtonColor: '#0f274f',
-                timer: 1800,
-                showConfirmButton: false,
-            });
-        }
+	        function showCreateSuccessAlert() {
+	            Swal.fire({
+	                title: 'Chord entry created successfully.',
+	                icon: 'success',
+	                iconColor: '#16a34a',
+	                confirmButtonColor: '#0f274f',
+	                timer: 1800,
+	                showConfirmButton: false,
+	            });
+	        }
 
-        function showRefreshAlert() {
-            Swal.fire({
-                title: 'Chord list refreshed.',
-                icon: 'success',
-                iconColor: '#2563eb',
-                confirmButtonColor: '#0f274f',
-                timer: 1600,
-                showConfirmButton: false,
-            });
-        }
+	        function showRefreshAlert() {
+	            Swal.fire({
+	                title: 'Chord list refreshed.',
+	                icon: 'success',
+	                iconColor: '#2563eb',
+	                confirmButtonColor: '#0f274f',
+	                timer: 1600,
+	                showConfirmButton: false,
+	            });
+	        }
 
-        async function confirmDelete(item) {
-            const result = await Swal.fire({
-                title: 'Delete chord entry?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc2626',
-                cancelButtonColor: '#94a3b8',
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel',
-            });
+	        function syncChordWithSize(size) {
+	            const chordBySize = {
+	                Medium: '1/4',
+	                Large: '1/2',
+	            };
 
-            return result.isConfirmed;
-        }
+	            if (chordBySize[size]) {
+	                chordInput.value = chordBySize[size];
+	                chordInput.dataset.autoFilled = 'true';
+	                return;
+	            }
 
-        function setLoading(isLoading) {
-            submitButton.disabled = isLoading;
-            refreshButton.disabled = isLoading;
-            submitButton.innerHTML = isLoading
-                ? '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Saving...'
-                : `<i class="bi ${state.editingId ? 'bi-check2-circle' : 'bi-plus-circle'} me-2"></i>${state.editingId ? 'Update entry' : 'Save entry'}`;
-        }
+	            if (chordInput.dataset.autoFilled === 'true') {
+	                chordInput.value = '';
+	            }
 
-        function resetForm() {
-            state.editingId = null;
-            recordIdInput.value = '';
-            form.reset();
-            formTitle.textContent = 'Add chord entry';
-            cancelEditButton.classList.add('d-none');
-            submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Save entry';
-        }
+	            delete chordInput.dataset.autoFilled;
+	        }
 
-        function enterEditMode(item) {
-            state.editingId = item.id;
-            recordIdInput.value = item.id;
-            sizeInput.value = item.size;
-            chordInput.value = item.chord;
-            formTitle.textContent = `Edit ${item.size}`;
-            cancelEditButton.classList.remove('d-none');
-            submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update entry';
-            clearStatus();
-            chordModal.show();
-            sizeInput.focus();
-        }
+	        async function confirmDelete(item) {
+	            const result = await Swal.fire({
+	                title: 'Delete chord entry?',
+	                icon: 'warning',
+	                showCancelButton: true,
+	                confirmButtonColor: '#dc2626',
+	                cancelButtonColor: '#94a3b8',
+	                confirmButtonText: 'Delete',
+	                cancelButtonText: 'Cancel',
+	            });
 
-        function formatDate(value) {
-            if (!value) {
-                return '-';
-            }
+	            return result.isConfirmed;
+	        }
+
+	        function setLoading(isLoading) {
+	            submitButton.disabled = isLoading;
+	            refreshButton.disabled = isLoading;
+	            submitButton.innerHTML = isLoading
+	                ? '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Saving...'
+	                : `<i class="bi ${state.editingId ? 'bi-check2-circle' : 'bi-plus-circle'} me-2"></i>${state.editingId ? 'Update entry' : 'Save entry'}`;
+	        }
+
+	        function resetForm() {
+	            state.editingId = null;
+	            recordIdInput.value = '';
+	            form.reset();
+	            delete chordInput.dataset.autoFilled;
+	            formTitle.textContent = 'Add chord entry';
+	            cancelEditButton.classList.add('d-none');
+	            submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Save entry';
+	        }
+
+	        function enterEditMode(item) {
+	            state.editingId = item.id;
+	            recordIdInput.value = item.id;
+	            sizeInput.value = item.size;
+	            chordInput.value = item.chord;
+	            quantityInput.value = item.quantity ?? 1;
+	            delete chordInput.dataset.autoFilled;
+	            formTitle.textContent = `Edit ${item.size}`;
+	            cancelEditButton.classList.remove('d-none');
+	            submitButton.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Update entry';
+	            clearStatus();
+	            chordModal.show();
+	            sizeInput.focus();
+	        }
+
+	        sizeInput.addEventListener('change', () => {
+	            syncChordWithSize(sizeInput.value);
+	        });
+
+	        chordInput.addEventListener('input', () => {
+	            delete chordInput.dataset.autoFilled;
+	        });
+
+	        function formatDate(value) {
+	            if (!value) {
+	                return '-';
+	            }
 
             return new Date(value).toLocaleString('en-US', {
                 year: 'numeric',
@@ -484,25 +516,26 @@
         }
 
         function renderTable() {
-            if (!state.items.length) {
-                chordTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="empty-state">
-                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-                            No chord records yet. Add your first size and chord value.
-                        </td>
-                    </tr>
-                `;
+	            if (!state.items.length) {
+	                chordTableBody.innerHTML = `
+	                    <tr>
+	                        <td colspan="6" class="empty-state">
+	                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+	                            No chord records yet. Add your first size, chord, and quantity values.
+	                        </td>
+	                    </tr>
+	                `;
                 return;
             }
 
-            chordTableBody.innerHTML = state.items.map((item, index) => `
-                <tr>
-                    <td class="fw-semibold text-secondary">${index + 1}</td>
-                    <td class="fw-semibold">${escapeHtml(item.size)}</td>
-                    <td><span class="value-chip">${escapeHtml(item.chord)}</span></td>
-                    <td class="text-secondary small">${formatDate(item.created_at)}</td>
-                    <td class="text-end">
+	            chordTableBody.innerHTML = state.items.map((item, index) => `
+	                <tr>
+	                    <td class="fw-semibold text-secondary">${index + 1}</td>
+	                    <td class="fw-semibold">${escapeHtml(item.size)}</td>
+	                    <td><span class="value-chip">${escapeHtml(item.chord)}</span></td>
+	                    <td class="fw-semibold">${escapeHtml(item.quantity)}</td>
+	                    <td class="text-secondary small">${formatDate(item.created_at)}</td>
+	                    <td class="text-end">
                         <div class="d-inline-flex gap-2">
                             <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" data-action="edit" data-id="${item.id}">
                                 <i class="bi bi-pencil-square me-1"></i>Edit
@@ -553,10 +586,11 @@
             clearStatus();
             setLoading(true);
 
-            const payload = {
-                size: sizeInput.value.trim(),
-                chord: chordInput.value.trim(),
-            };
+	            const payload = {
+	                size: sizeInput.value.trim(),
+	                chord: chordInput.value.trim(),
+	                quantity: quantityInput.value.trim(),
+	            };
 
             try {
                 const isEditing = Boolean(state.editingId);

@@ -14,14 +14,14 @@ class ChordController extends Controller
         return view('auth.chord', [
             'chords' => Chord::query()
                 ->latest()
-                ->get(['id', 'size', 'chord', 'created_at']),
+                ->get(['id', 'size', 'chord', 'quantity', 'created_at']),
         ]);
     }
 
     public function index(): JsonResponse
     {
         return response()->json(
-            Chord::query()->latest()->get(['id', 'size', 'chord', 'created_at'])
+            Chord::query()->latest()->get(['id', 'size', 'chord', 'quantity', 'created_at'])
         );
     }
 
@@ -30,6 +30,7 @@ class ChordController extends Controller
         $validated = $request->validate([
             'size' => ['required', 'string', 'max:120'],
             'chord' => ['required', 'string', 'max:120'],
+            'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
         $chord = Chord::create($validated);
@@ -45,6 +46,7 @@ class ChordController extends Controller
         $validated = $request->validate([
             'size' => ['required', 'string', 'max:120'],
             'chord' => ['required', 'string', 'max:120'],
+            'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
         $chord->update($validated);

@@ -9,5 +9,6 @@ class Chord extends Model
     protected $fillable = [
         'size',
         'chord',
+        'quantity',
     ];
 }

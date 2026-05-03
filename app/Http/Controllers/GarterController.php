@@ -14,28 +14,32 @@ class GarterController extends Controller
         return view('auth.garter', [
             'garters' => Garter::query()
                 ->latest()
-                ->get(['id', 'garter', 'black_edge', 'created_at']),
+                ->get(['id', 'garter as inches', 'quantity', 'created_at']),
         ]);
     }
 
     public function index(): JsonResponse
     {
         return response()->json(
-            Garter::query()->latest()->get(['id', 'garter', 'black_edge', 'created_at'])
+            Garter::query()->latest()->get(['id', 'garter as inches', 'quantity', 'created_at'])
         );
     }
 
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'garter' => ['required', 'string', 'max:120'],
-            'black_edge' => ['required', 'string', 'max:120'],
+            'inches' => ['required', 'string', 'max:120'],
+            'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
-        $garter = Garter::create($validated);
+        $garter = Garter::create([
+            'garter' => $validated['inches'],
+            'black_edge' => $validated['inches'],
+            'quantity' => $validated['quantity'],
+        ]);
 
         return response()->json([
-            'message' => 'Garter entry created successfully.',
+            'message' => 'Inches entry created successfully.',
             'data' => $garter,
         ], 201);
     }
@@ -43,14 +47,18 @@ class GarterController extends Controller
     public function update(Request $request, Garter $garter): JsonResponse
     {
         $validated = $request->validate([
-            'garter' => ['required', 'string', 'max:120'],
-            'black_edge' => ['required', 'string', 'max:120'],
+            'inches' => ['required', 'string', 'max:120'],
+            'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
-        $garter->update($validated);
+        $garter->update([
+            'garter' => $validated['inches'],
+            'black_edge' => $validated['inches'],
+            'quantity' => $validated['quantity'],
+        ]);
 
         return response()->json([
-            'message' => 'Garter entry updated successfully.',
+            'message' => 'Inches entry updated successfully.',
             'data' => $garter->fresh(),
         ]);
     }
@@ -60,7 +68,7 @@ class GarterController extends Controller
         $garter->delete();
 
         return response()->json([
-            'message' => 'Garter entry deleted successfully.',
+            'message' => 'Inches entry deleted successfully.',
         ]);
     }
 }
