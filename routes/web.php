@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/garters', [GarterController::class, 'store'])->name('garters.store');
     Route::put('/garters/{garter}', [GarterController::class, 'update'])->name('garters.update');
     Route::delete('/garters/{garter}', [GarterController::class, 'destroy'])->name('garters.destroy');
+    Route::view('/thread-apple-brand', 'auth.thread-apple-brand')->name('thread-apple-brand');
     Route::get('/peactwill', [PeactwillController::class, 'page'])->name('peactwill');
     Route::get('/peactwills', [PeactwillController::class, 'index'])->name('peactwills.index');
     Route::post('/peactwills', [PeactwillController::class, 'store'])->name('peactwills.store');

@@ -220,6 +220,10 @@
                         <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Peactwill Color</div>
                     </a>
+                    <a href="{{ route('thread-apple-brand') }}" class="sidebar-link">
+                        <i class="bi bi-tag sidebar-icon" aria-hidden="true"></i>
+                        <div class="fw-semibold">Thread Apple Brand</div>
+                    </a>
             </nav>
         </aside>
         <main class="main-panel">

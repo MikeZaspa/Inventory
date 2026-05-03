@@ -31,8 +31,8 @@ return [
             'summary' => 'Monitor peactwill stock and prepare this section for item details.',
         ],
         [
-            'slug' => 'thead-apple-brand',
-            'label' => 'Thead Apple Brand',
+            'slug' => 'thread-apple-brand',
+            'label' => 'Thread Apple Brand',
             'description' => 'Material category',
             'category' => 'Materials',
             'summary' => 'Keep thread apple brand records organized and easy to review.',
