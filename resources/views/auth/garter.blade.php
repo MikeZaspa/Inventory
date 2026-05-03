@@ -238,13 +238,13 @@
                         <i class="bi bi-bounding-box sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Chord</div>
                     </a>
-                    <a href="{{ route('garter') }}" class="sidebar-link">
+                    <a href="{{ route('garter') }}" class="sidebar-link active" aria-current="page">
                         <i class="bi bi-square sidebar-icon" aria-hidden="true"></i>
                         <div class="fw-semibold">Inches</div>
                     </a>
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('peactwill') }}" class="sidebar-link">
                         <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
-                        <div class="fw-semibold">Peactwill</div>
+                        <div class="fw-semibold">Peactwill Color</div>
                     </a>
                 </nav>
             </aside>
@@ -313,8 +313,12 @@
 	                    <form id="garterForm" class="d-grid gap-3">
 	                        <input type="hidden" id="recordId">
                         <div>
-		                            <label for="garter" class="form-label">Inches</label>
-		                            <input type="text" class="form-control" id="garter" name="inches" required>
+			                            <label for="garter" class="form-label">Inches</label>
+			                            <select class="form-control" id="garter" name="inches" required>
+			                                <option value="">Select inches</option>
+			                                <option value="2 Inch">2 Inch</option>
+			                                <option value="1 1/2 Inch">1 1/2 Inch</option>
+			                            </select>
                         </div>
                         <div>
                             <label for="quantity" class="form-label">Quantity</label>

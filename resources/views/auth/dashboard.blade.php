@@ -216,10 +216,10 @@
                     <i class="bi bi-square sidebar-icon" aria-hidden="true"></i>
                     <div class="fw-semibold">Garter Black Edge</div>
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
-                    <div class="fw-semibold">Peactwill</div>
-                </a>
+                    <a href="{{ route('peactwill') }}" class="sidebar-link">
+                        <i class="bi bi-columns-gap sidebar-icon" aria-hidden="true"></i>
+                        <div class="fw-semibold">Peactwill Color</div>
+                    </a>
             </nav>
         </aside>
         <main class="main-panel">

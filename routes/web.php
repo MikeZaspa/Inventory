@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChordController;
 use App\Http\Controllers\GarterController;
+use App\Http\Controllers\PeactwillController;
 use App\Models\Chord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/garters', [GarterController::class, 'store'])->name('garters.store');
     Route::put('/garters/{garter}', [GarterController::class, 'update'])->name('garters.update');
     Route::delete('/garters/{garter}', [GarterController::class, 'destroy'])->name('garters.destroy');
+    Route::get('/peactwill', [PeactwillController::class, 'page'])->name('peactwill');
+    Route::get('/peactwills', [PeactwillController::class, 'index'])->name('peactwills.index');
+    Route::post('/peactwills', [PeactwillController::class, 'store'])->name('peactwills.store');
+    Route::put('/peactwills/{peactwill}', [PeactwillController::class, 'update'])->name('peactwills.update');
+    Route::delete('/peactwills/{peactwill}', [PeactwillController::class, 'destroy'])->name('peactwills.destroy');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
